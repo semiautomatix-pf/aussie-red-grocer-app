@@ -1,0 +1,26 @@
+app = "australia-red-grocer-app"
+primary_region = "syd"
+
+[build]
+  dockerfile = "docker/server/Dockerfile"
+
+[env]
+  PORT = "9000"
+
+[[vm]]
+  memory = "1gb"
+  cpu_kind = "shared"
+  cpus = 1
+
+[http_service]
+  internal_port = 9000
+  force_https = true
+  auto_start_machines = true
+  auto_stop_machines = false
+  min_machines_running = 1
+  processes = ["app"]
+
+  [[http_service.tcp_checks]]
+    interval = "10s"
+    timeout  = "2s"
+    grace_period = "60s"
